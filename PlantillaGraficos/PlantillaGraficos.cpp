@@ -13,83 +13,69 @@
 
 using namespace std;
 
-void dibujarPoligono() {
-	glBegin(GL_POLYGON);
+float angulo = 0.0f;
 
-	glColor3f(0.4f, 0.4f, 0.9f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.5f, 0.0f);
-	glVertex3f(0.2f, 0.3f, 0.0f);
-	glVertex3f(0.2f, -0.2f, 0.0f);
-
-	glEnd();
+void actualizar() {
+	angulo += 0.01;
+	if (angulo >= 360.0f) {
+		angulo = 0.0f;
+	}
 }
 
-void dibujarTrianguloContinuo() {
-	glBegin(GL_TRIANGLE_STRIP);
+void dibujarTriangulo() {
+	glPushMatrix();
 
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glColor3f(0.6f, 0.5f, 0.0f);
-	glVertex3f(0.1f, 0.1f, 0.0f);
-	glColor3f(0.1f, 0.5f, 0.8f);
-	glVertex3f(0.2f, 0.0f, 0.0f);
-	glColor3f(0.8f, 0.0f, 0.4f);
-	glVertex3f(0.2f, 0.1f, 0.0f);
-	glColor3f(0.4f, 0.6f, 0.4f);
-	glVertex3f(0.3f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.15f, 0.0f);
+	glRotatef(angulo, 0.0f, 1.0f, 0.0f);
+	//glScalef(0.5f, 2.0f, 1.0f);
 
-
-	glEnd();
-}
-
-void dibujarLineaContinua() {
-	glBegin(GL_LINE_STRIP);
-
-	glColor3f(0.1f, 0.3f, 0.75f);
-
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.2f, 0.0f);
-	glVertex3f(0.4f, 0.2f, 0.0f);
-	glVertex3f(0.2f, 0.3f, 0.0f);
-
-	glEnd();
-}
-
-void dibujarLineas() {
-	glBegin(GL_LINES);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.2f, -0.4f, 0.0f);
-
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.2f, 0.4f, 0.0f);
-
-	glEnd();
-}
-
-void dibujarTriangulos() {
-	// Establecemos el tipo de primitiva
 	glBegin(GL_TRIANGLES);
-	// Establecemos color
-	glColor3f(0.7, 0.7f, 0.6f);
-	// Enviar vértices
-	glVertex3f(0.7, 0.7, 0.0f);
-	glColor3f(0.0f, 0.8f, 0.7);
-	glVertex3f(-0.7, -0.7, 0.0f);
-	glColor3f(0.4f, 0.7, 0.7);
-	glVertex3f(0.7, -0.7, 0.0f);
 
-	glColor3f(0.0f, 0.0f, 0.7);
-	glVertex3f(-0.7, 0.7, 0.0f);
-	glVertex3f(-0.7, -0.7, 0.0f);
-	glVertex3f(0.7, 0.7, 0.0f);
-	// Especificar que dejaremos de dibujar
+	glColor3f(0.7f, 0.1f, 0.8f);
+	glVertex3f(0.0f, 0.15f, 0.0f);
+	glVertex3f(0.15f, -0.15f, 0.0f);
+	glVertex3f(-0.15f, -0.15f, 0.0f);
+
 	glEnd();
+	glPopMatrix();
+
+	// Segundo triangulo
+	glPushMatrix();
+
+	glTranslatef(-0.15f, -0.15f, 0.0f);
+	glRotatef(angulo, 0.0f, 1.0f, 0.0f);
+	//glScalef(0.5f, 2.0f, 1.0f);
+
+	glBegin(GL_TRIANGLES);
+
+	glColor3f(0.7f, 0.1f, 0.8f);
+	glVertex3f(0.0f, 0.15f, 0.0f);
+	glVertex3f(0.15f, -0.15f, 0.0f);
+	glVertex3f(-0.15f, -0.15f, 0.0f);
+
+	glEnd();
+	glPopMatrix();
+
+	// Tercer triangulo
+	glPushMatrix();
+
+	glTranslatef(0.15f, -0.15f, 0.0f);
+	glRotatef(angulo, 0.0f, 1.0f, 0.0f);
+	//glScalef(0.5f, 2.0f, 1.0f);
+
+	glBegin(GL_TRIANGLES);
+
+	glColor3f(0.7f, 0.1f, 0.8f);
+	glVertex3f(0.0f, 0.15f, 0.0f);
+	glVertex3f(0.15f, -0.15f, 0.0f);
+	glVertex3f(-0.15f, -0.15f, 0.0f);
+
+	glEnd();
+	glPopMatrix();
 }
 
 void dibujar() {
-	dibujarPoligono();
+	dibujarTriangulo();
 }
 
 int main()
@@ -140,6 +126,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Actualizar valores y dibujar		
+		actualizar();
 		dibujar();
 
 		glfwPollEvents();
